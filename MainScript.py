@@ -30,7 +30,7 @@ def customWord(word):
     if val != False:
         return GSobject.wordsToHex(val[0])
     else:
-        return "WORD CANNOT BE CONVERTED IT CONTAINS CHARS WITHIN THE HEX RANGE AND IS A LENGTH OF 3 OR 6"
+        return "WORD CANNOT BE CONVERTED IT MUST CONTAINS CHARS WITHIN THE HEX RANGE AND MUST HAVE A LENGTH OF 3 OR 6"
 
 def userInterface():
     """
