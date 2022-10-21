@@ -1,4 +1,4 @@
-import GembaScript as GS
+import WordsToHex.WordsToHex as GS
 from os import listdir
 from os.path import isfile, join
 import re
@@ -17,7 +17,14 @@ def getFiles():
     return file
 
 def customWord(word):
-    GSobject = GS.WordsToHex("lol")
+    """
+    customWord recieves a string and processes it and if the string is valid it will convert the string
+    so its hex form.
+
+    :params word: A string of chars of length 3 or 6
+    :returns: either an error message if the string cannot be converted or the converted string
+    """
+    GSobject = GS.HexGenerator()
     val = GSobject.preProcess([word.lower()])
 
     if val != False:
@@ -26,7 +33,11 @@ def customWord(word):
         return "WORD CANNOT BE CONVERTED IT CONTAINS CHARS WITHIN THE HEX RANGE AND IS A LENGTH OF 3 OR 6"
 
 def userInterface():
-    GSobject = GS.WordsToHex()
+    """
+    userInterface is used to help user navigete the program by providing them with options and showing
+    error messages accordingly to make sure they are made clear what is happening.
+    """
+    GSobject = GS.HexGenerator()
     alive = True
 
     print("""

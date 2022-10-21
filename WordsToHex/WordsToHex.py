@@ -1,14 +1,12 @@
 import re
 import itertools
-import collections
 import json
 
 letterMap = {'o':'0','l':'1','i':'1','a':'4','s':'5','t':'7'}
 hexAlpha = ['a','b','c','d','e','f']
 lettersReq = ['a','b','c','d','e','f','o','s','t','l','i']
 
-# This class is inchage of handling of all processing of data 
-class WordsToHex:
+class HexGenerator:
 
     def __init__(self, *args):
         if(len(args) != 0):
@@ -26,7 +24,8 @@ class WordsToHex:
         parseFile recieves a filename and put the values into a list with the newline delimter stripped
 
         :param fileName: dictates the location of the file in the system
-        :return: Returns a list of strings without the newline delimiter
+        :return: Returns a list of strings without the newline delimiter and if the file cannot be opened
+                 returns False so that the error can be handled.
         """
         try:
             file = open(fileName, 'r')
@@ -46,7 +45,8 @@ class WordsToHex:
 
         :param words: A list of strings
         :return: Returns a list of strings that are either of length 3 or 6 and have character which can
-                 either be converted to a hex char, is already a hex char or satisfies both conditions
+                 either be converted to a hex char, is already a hex char or satisfies both conditions.
+                 If the the word cannot be converted then it will be return False.
         """
         filteredWords = [w for w in words if (len(w) == 3 or len(w) == 6) and re.match("^[abcdefolist]+$",w)]
 
