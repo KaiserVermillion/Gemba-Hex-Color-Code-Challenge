@@ -18,7 +18,6 @@ class HexGenerator:
     def parseJSON(self, fileName):
         with open(fileName) as file:
             loaded = json.load(file)
-        #loaded = json.loads(fileName)
         jsonWords = [i for i in loaded]
         return jsonWords
 
@@ -32,8 +31,7 @@ class HexGenerator:
         """
         try:
             file = open(fileName, 'r')
-            lines = file.readlines()
-            lines = [x.strip() for x in lines]
+            lines = [x.strip() for x in file.readlines()]
             return lines
         except:
             return False
@@ -82,7 +80,6 @@ class HexGenerator:
                 hexWords.append( self.wordsToHex(i))
 
             self.writeToFile(hexWords)
-            # print(hexWords)
         return
 
 
