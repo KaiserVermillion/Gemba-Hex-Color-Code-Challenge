@@ -7,7 +7,7 @@ hexAlpha = ['a','b','c','d','e','f']
 lettersReq = ['a','b','c','d','e','f','o','s','t','l','i']
 
 versions3 = list(itertools.product([0, 1], repeat=3))
-versions6 = list(itertools.product([0, 1], repeat=5))
+versions6 = list(itertools.product([0, 1], repeat=6))
 
 class HexGenerator:
 
@@ -16,6 +16,14 @@ class HexGenerator:
             self.file = args[0]
 
     def parseJSON(self, fileName):
+
+        """
+        parseJSON opens a JSON file, loads the JSON object and adds the words to a list
+
+        :param fileName: dictates the location of the file in the system
+        :return: Returns a list of strings from the JSON object.
+        """
+
         with open(fileName) as file:
             loaded = json.load(file)
         jsonWords = [i for i in loaded]
@@ -32,7 +40,7 @@ class HexGenerator:
         try:
             file = open(fileName, 'r')
             lines = [x.strip() for x in file.readlines()]
-            print(lines)
+            return lines
         except:
             return False
 
@@ -59,7 +67,7 @@ class HexGenerator:
         """
         readWords takes in a file and depending on the type processes it differently and generate the hex words
 
-        :params filePath: the path of the fi
+        :params filePath: the path of the file
         """
         hexWords = []
         parsedFile = self.parseFile(filePath)
@@ -131,7 +139,6 @@ class HexGenerator:
         :returns: A list of strings that are the hex representations of the word passed to the method
         """
         binaryRep = self.createBinaryRepresentation(word)
-        
 
         if (len(word) == 3):
             binaryWords = self.processList(binaryRep,versions3)

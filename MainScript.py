@@ -55,7 +55,7 @@ def userInterface():
     """)
 
     while(alive):
-        
+
         print("Enter option")
         option = input()
 
