@@ -80,8 +80,7 @@ class HexGenerator:
             return False
 
         if not parsedFile:
-            print ("ERROR SPECIFIED PATH CANNOT BE LOCATED, PLEASE TRY AGAIN")
-            return
+            return False
         else:
             processedList =  self.preProcess(parsedFile)
 

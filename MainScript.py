@@ -63,8 +63,16 @@ def userInterface():
 
             files = getFiles()
             fileNum = input("Enter the number of the file you wish to read in: ")
-            fileName = files[int(fileNum) - 1]
-            GSobject.readWords("./assets/read_in_files/" + fileName)
+
+            if(int(fileNum) <= len(files)):
+                fileName = files[int(fileNum) - 1]
+                success = GSobject.readWords("./assets/read_in_files/" + fileName)
+                if(success):
+                    print("FAILED TO PROCESS FILE")
+                else:
+                    print("PROCESSING COMPLETED CHECK HexWord FOR YOUR HEX VALUES")
+            else:
+                print("FILE NUMBER EXCEED AMOUNT OF FILES")
 
         elif option == "2":
 
@@ -73,6 +81,8 @@ def userInterface():
 
             if(test == False):
                 print("ERROR CANNOT PROCESS FILE")
+            else:
+                print("PROCESSING COMPLETED CHECK HexWord FOR YOUR HEX VALUES")
 
         elif option == "3":
 
