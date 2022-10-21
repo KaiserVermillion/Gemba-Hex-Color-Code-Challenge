@@ -36,8 +36,7 @@ class HexGenerator:
         except:
             return False
 
-    # Removes words which do not need to be processed as they lay outside the max hex value length
-    # Regex
+
     def preProcess(self, words):
         """
         preProcess, filters the original words list to leave behind only words of length 3 or 6 and 
@@ -103,11 +102,8 @@ class HexGenerator:
 
     def processList(self, binaryRep, versions):
         """
-        processList identifies the index of the 0 values which are in the binary represenation of the word,
-        indexes holds this information and is then used to find the binary values with 0 in the corrosponding spots.
-        This is done by finding the indecies of the 0 char within the binary values and seeing if they match up with 
-        the ones from the original binary representation (binaryRep) which is passed into the method. If its a match
-        this is appended to the list.
+        processList filters the different binary representations (versions) of a word based on the original binary represenation (binaryRep)
+        and returns only the ones which match the original word.
 
         :params binaryRep: Is the binary representation of the string we want to identify the possible combinations for
         :params versions: Is a list of tuples that represent every combination of 0s and 1s that can exist from either a length
@@ -126,16 +122,12 @@ class HexGenerator:
 
     def wordsToHex(self, word):
         """
-        wordsToHex is the main processing method which first generates all the different combinations of 0s and 1s
-        based on the length of the word. The binary representation of the word is then made, both of these values are
-        then passed to the processList method which will return the binary representaions of the combinations that exist
-        for that word. The binary representations are then looped over and the word is then reconstructed, formatted and
-        checked one last time to make sure all the chars are correct.
+        wordsToHex uses the word given to it (word) and makes the different binary versions of it and then reconstruct the word
+        in hex form, adds it to the list and retunrs it.
 
         :params word: Is the string we are trying to convert to hex
         :returns: A list of strings that are the hex representations of the word passed to the method
         """
-        versions = list(itertools.product([0, 1], repeat=len(word)))
         binaryRep = self.createBinaryRepresentation(word)
         
 
@@ -144,11 +136,10 @@ class HexGenerator:
         elif(len(word) == 6):
             binaryWords = self.processList(binaryRep,versions6)
         else:
-            return ("ERROR WORD LENGTH EXEEDS LEGAL HEX VALUE LENGTH")
+            return "ERROR WORD LENGTH EXEEDS LEGAL HEX VALUE LENGTH"
 
         finalHex = []
         strConstruct = ""
-        hexStr = ""
         
         for bWords in binaryWords:
             inc = 0
