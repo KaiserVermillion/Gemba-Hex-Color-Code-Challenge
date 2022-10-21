@@ -1,65 +1,45 @@
 import GembaScript as GS
-import os
-import os.path
+from os import listdir
+from os.path import isfile, join
+import re
 
-filename = "lol"
+def getFiles():
+    """
+    getFiles will enter the target folder specifies in the filePath variable and add the names of the 
+    files in that folder into a list.
 
+    :returns: A list containing the names of all the files in the folder
+    """
+    filePath = "./assets/read_in_files"
+    file = [f for f in listdir(filePath) if isfile(join(filePath, f))]
+    for i in file:
+        print(str(file.index(i) + 1) + ") " + i + '\n')
+    return file
 
-fileName2 = "C:/Users/Kog Arun/Documents/Gemba Advantage Coding Test/english-words-master/words_alpha.txt"
-# test1 = GS.WordsToHex(fileName2)
-# tmpHolder = test1.parseFile(fileName2)
-# tmpHolder2 = test1.preProcess(tmpHolder)
-
-# for i in tmpHolder2:
-#     tmpList.append(test1.wordsToHex(i))
-
-# test1.writeToFile(tmpList)
-
-
-# print(tmpList)
-# print(len(tmpList))
-
-def getFiles(filePath):
-    print("lmfao")
-
-def readWords(filePath):
-    tmpList = []
-    test1 = GS.WordsToHex(filePath)
-    tmpHolder = test1.parseFile(filePath)
-
-    if not tmpHolder:
-        print ("ERROR SPECIFIED PATH CANNOT BE LOCATED, PLEASE TRY AGAIN")
-        return
-    else:
-        tmpHolder2 = test1.preProcess(tmpHolder)
-
-        for i in tmpHolder2:
-            tmpList.append(test1.wordsToHex(i))
-
-        test1.writeToFile(tmpList)
-        #print(tmpList)
-    return
-    
 def customWord(word):
-    test1 = GS.WordsToHex("lol")
-    val = test1.preProcess([word.lower()])
+    GSobject = GS.WordsToHex("lol")
+    val = GSobject.preProcess([word.lower()])
 
     if val != False:
-        print(test1.wordsToHex(val[0]))
+        return GSobject.wordsToHex(val[0])
     else:
-        print("WORD CANNOT BE CONVERTED MAKE SURE ITS EAITHER 3 OR 6 CHRACTERS LONG")
-        return
+        return "WORD CANNOT BE CONVERTED IT CONTAINS CHARS WITHIN THE HEX RANGE AND IS A LENGTH OF 3 OR 6"
 
 def userInterface():
-
+    GSobject = GS.WordsToHex()
     alive = True
 
     print("""
         WELCOME USER TO THE WORD TO HEX PROGRAM PLEASE CHOOSE FROM THE FOLLOWING:
 
+        ┌───────────────────────────────────────────────────────────────────────┐
+          note to user: ensure that files are saved in the read_in_files folder 
+                            if you inted on using option 1                      
+        └───────────────────────────────────────────────────────────────────────┘
+
                             1) Select a file from the list
                                  2) Enter a file path
-                                3) Enter a custom word
+                                    3) Enter a word
                                     4) Exit Program
     """)
 
@@ -68,16 +48,21 @@ def userInterface():
         option = input()
 
         if option == "1":
-            getFiles("lol")
-            print(option)
+            files = getFiles()
+            fileNum = input("Enter the number of the file you wish to read in: ")
+            fileName = files[int(fileNum) - 1]
+            GSobject.readWords("./assets/read_in_files/" + fileName)
         elif option == "2":
             filepath = input("Enter the full file path:")
-            readWords(filepath)
+            GSobject.readWords(filepath)
+
         elif option == "3":
             word= input("Enter a word you wish to convert:")
-            customWord(word)
+            print(customWord(word))
+
         elif option == "4":
             alive = False
+            
         else:
              print("Not a valid option please enter a value the give ones above")
         

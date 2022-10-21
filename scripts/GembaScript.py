@@ -1,6 +1,7 @@
 import re
 import itertools
 import collections
+import json
 
 letterMap = {'o':'0','l':'1','i':'1','a':'4','s':'5','t':'7'}
 hexAlpha = ['a','b','c','d','e','f']
@@ -9,8 +10,16 @@ lettersReq = ['a','b','c','d','e','f','o','s','t','l','i']
 # This class is inchage of handling of all processing of data 
 class WordsToHex:
 
-    def __init__(self, file):
-        self.file = file
+    def __init__(self, *args):
+        if(len(args) != 0):
+            self.file = args[0]
+
+    def parseJSON(self, fileName):
+        with open(fileName) as file:
+            loaded = json.load(file)
+        #loaded = json.loads(fileName)
+        jsonWords = [i for i in loaded]
+        return jsonWords
 
     def parseFile(self, fileName):
         """
@@ -39,15 +48,39 @@ class WordsToHex:
         :return: Returns a list of strings that are either of length 3 or 6 and have character which can
                  either be converted to a hex char, is already a hex char or satisfies both conditions
         """
-        #reg = re.compile("[A-Fa-f0-9]")
-        #stage1 = list(filter(reg.match, words))
         filteredWords = [w for w in words if (len(w) == 3 or len(w) == 6) and re.match("^[abcdefolist]+$",w)]
 
         if(len(filteredWords) != 0):
             return filteredWords
         else:
-            #print(filteredWords)
             return False
+
+    def readWords(self, filePath):
+        """
+        readWords takes in a file and depending on the type processes it differently and generate the hex words
+
+        :params filePath: the path of the fi
+        """
+        hexWords = []
+        parsedFile = self.parseFile(filePath)
+        isJson = re.search(r'(?<=\.).*',filePath[1:])
+
+
+        if(isJson.group() == "json"):
+            parsedFile =  self.parseJSON(filePath)
+
+        if not parsedFile:
+            print ("ERROR SPECIFIED PATH CANNOT BE LOCATED, PLEASE TRY AGAIN")
+            return
+        else:
+            processedList =  self.preProcess(parsedFile)
+
+            for i in processedList:
+                hexWords.append( self.wordsToHex(i))
+
+            self.writeToFile(hexWords)
+            # print(hexWords)
+        return
 
     # def divideAndConq(self,word):
     #     """
