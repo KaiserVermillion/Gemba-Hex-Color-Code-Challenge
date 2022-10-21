@@ -6,6 +6,9 @@ letterMap = {'o':'0','l':'1','i':'1','a':'4','s':'5','t':'7'}
 hexAlpha = ['a','b','c','d','e','f']
 lettersReq = ['a','b','c','d','e','f','o','s','t','l','i']
 
+versions3 = list(itertools.product([0, 1], repeat=3))
+versions6 = list(itertools.product([0, 1], repeat=5))
+
 class HexGenerator:
 
     def __init__(self, *args):
@@ -188,7 +191,15 @@ class HexGenerator:
         """
         versions = list(itertools.product([0, 1], repeat=len(word)))
         binaryRep = self.createBinaryRepresentation(word)
-        binaryWords = self.processList(binaryRep,versions)
+        
+
+        if (len(word) == 3):
+            binaryWords = self.processList(binaryRep,versions3)
+        elif(len(word) == 6):
+            binaryWords = self.processList(binaryRep,versions6)
+        else:
+            return ("ERROR WORD LENGTH EXEEDS LEGAL HEX VALUE LENGTH")
+
         finalHex = []
         strConstruct = ""
         hexStr = ""
