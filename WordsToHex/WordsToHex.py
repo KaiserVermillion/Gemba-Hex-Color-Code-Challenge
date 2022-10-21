@@ -32,7 +32,7 @@ class HexGenerator:
         try:
             file = open(fileName, 'r')
             lines = [x.strip() for x in file.readlines()]
-            return lines
+            print(lines)
         except:
             return False
 
@@ -65,9 +65,11 @@ class HexGenerator:
         parsedFile = self.parseFile(filePath)
         isJson = re.search(r'(?<=\.).*',filePath[1:])
 
-
-        if(isJson.group() == "json"):
-            parsedFile =  self.parseJSON(filePath)
+        try:
+            if(isJson.group() == "json"):
+                parsedFile =  self.parseJSON(filePath)
+        except:
+            return False
 
         if not parsedFile:
             print ("ERROR SPECIFIED PATH CANNOT BE LOCATED, PLEASE TRY AGAIN")

@@ -55,23 +55,32 @@ def userInterface():
     """)
 
     while(alive):
+        
         print("Enter option")
         option = input()
 
         if option == "1":
+
             files = getFiles()
             fileNum = input("Enter the number of the file you wish to read in: ")
             fileName = files[int(fileNum) - 1]
             GSobject.readWords("./assets/read_in_files/" + fileName)
+
         elif option == "2":
+
             filepath = input("Enter the full file path:")
-            GSobject.readWords(filepath)
+            test = GSobject.readWords(filepath)
+
+            if(test == False):
+                print("ERROR CANNOT PROCESS FILE")
 
         elif option == "3":
+
             word= input("Enter a word you wish to convert:")
             print(customWord(word))
 
         elif option == "4":
+
             alive = False
             
         else:
