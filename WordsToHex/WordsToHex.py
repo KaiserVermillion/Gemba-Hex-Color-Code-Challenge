@@ -185,8 +185,12 @@ class HexGenerator:
 
         :params hexList: is a list of string which should have been converted and processed into hex codes
         """
-        file = open("./assets/HexWords", "w")
-        for tmp in hexList:
-            for i in tmp:
-                file.write("%s\n" % i)
-        file.close()
+        try:
+            file = open("./assets/HexWords", "w")
+            for tmp in hexList:
+                for i in tmp:
+                    file.write("%s\n" % i)
+            file.close()
+            return
+        except:
+            return("ERROR CANNOT WRITE TO FILE ADD A FILE NAMEED HexWords.txt TO THE ASSETS FOLDER")
